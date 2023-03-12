@@ -1,3 +1,4 @@
+( () => { 
 const btn = document.querySelector("[data-form-btn]");
 
 const createTask = (evento) => {
@@ -8,18 +9,33 @@ const createTask = (evento) => {
     const task =  document.createElement('li');
     task.classList.add("card");
     input.value = "";
-const content = ` <div>
-        <i class="far fa-check-square icon"></i>
-        <span class="task">${value}</span>
-        </div>
+    const taskContent  = document.createElement("div");
+    taskContent.appendChild(checkComplete());
+    const tittleTask = document.createElement("span");
+    tittleTask.classList.add("task");
+    tittleTask.innerHTML = value
+    taskContent.appendChild(tittleTask)
+    const content = `
+        ${checkComplete()}
         <i class="fas fa-trash-alt trashIcon icon"></i>`;
-        task.innerHTML = content;
+     //   task.innerHTML = content;
+    task.appendChild(taskContent);
+    list.appendChild(task);
+}
+btn.addEventListener("click", createTask );
 
-list.appendChild(task);
-    console.log(content);
+const checkComplete = () => {
+    const i = document.createElement("i")
+    i.classList.add('far','fa-check-square','icon');
+    i.addEventListener("click", completeTask)
+    return i;
 }
 
+const completeTask = (event) => {
+    const element = event.target
+    element.classList.toggle("fas")
+    element.classList.toggle("completeIcon")
+    element.classList.toggle("far")
+}
 
-console.log(btn);
-
-btn.addEventListener("click", createTask );
+})();
